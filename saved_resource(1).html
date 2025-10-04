@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<!-- saved from url=(0140)https://bpwyzyc65rvzy1ye.canva-hosted-embed.com/codelet/AAEAEGJwd3l6eWM2NXJ2enkxeWUAAAAAAZmyfrK_Did5mhPjNAQszxFBziHUYbH9_tVwDlfpV3OtTfko1oc/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farcaster Mini</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .compose-section {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .compose-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: border-color 0.2s;
+        }
+
+        .compose-box:focus-within {
+            border-color: #8B5CF6;
+        }
+
+        .compose-textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 16px;
+            font-family: inherit;
+            min-height: 60px;
+            background: transparent;
+        }
+
+        .compose-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .char-count {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .cast-btn {
+            background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cast-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .cast-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feed {
+            padding: 0 20px 20px;
+        }
+
+        .cast {
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: box-shadow 0.2s;
+        }
+
+        .cast:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .cast-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .cast-info {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+            margin: 2px 0 0 0;
+        }
+
+        .cast-content {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .cast-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            color: #8B5CF6;
+        }
+
+        .action-btn.liked {
+            color: #ef4444;
+        }
+
+        .action-btn.recasted {
+            color: #10b981;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 15px 20px;
+            margin: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            margin: 0 0 10px 0;
+            color: #475569;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #8B5CF6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🟣 Farcaster</h1>
+            <p>Decentralized social network</p>
+        </div>
+
+        <div class="compose-section">
+            <div class="compose-box">
+                <textarea class="compose-textarea" placeholder="What&#39;s happening on the protocol?" maxlength="280" id="composeText"></textarea>
+            </div>
+            <div class="compose-actions">
+                <span class="char-count" id="charCount">0/280</span>
+                <button class="cast-btn" id="castBtn" onclick="publishCast()" disabled="">Cast</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3>Your Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" id="castsCount">12</span>
+                    <span class="stat-label">Casts</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="followersCount">1.2k</span>
+                    <span class="stat-label">Followers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="followingCount">234</span>
+                    <span class="stat-label">Following</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feed" id="feed">
+            <div class="cast">
+                <div class="cast-header">
+                    <div class="avatar">V</div>
+                    <div class="cast-info">
+                        <p class="username">vitalik.eth</p>
+                        <p class="timestamp">2 hours ago</p>
+                    </div>
+                </div>
+                <div class="cast-content">
+                    Just deployed a new smart contract on Base! The future of decentralized social is looking bright 🌟
+                </div>
+                <div class="cast-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        ❤️ <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleRecast(this)">
+                        🔄 <span>8</span>
+                    </button>
+                    <button class="action-btn">
+                        💬 <span>12</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="cast">
+                <div class="cast-header">
+                    <div class="avatar">D</div>
+                    <div class="cast-info">
+                        <p class="username">dwr.eth</p>
+                        <p class="timestamp">4 hours ago</p>
+                    </div>
+                </div>
+                <div class="cast-content">
+                    Building in public is the way. Excited to see what the Farcaster community creates next! 🚀
+                </div>
+                <div class="cast-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        ❤️ <span>156</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleRecast(this)">
+                        🔄 <span>43</span>
+                    </button>
+                    <button class="action-btn">
+                        💬 <span>28</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="cast">
+                <div class="cast-header">
+                    <div class="avatar">A</div>
+                    <div class="cast-info">
+                        <p class="username">aeyakovenko.eth</p>
+                        <p class="timestamp">6 hours ago</p>
+                    </div>
+                </div>
+                <div class="cast-content">
+                    The intersection of crypto and social media is where the magic happens. Decentralization FTW! ⚡
+                </div>
+                <div class="cast-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        ❤️ <span>89</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleRecast(this)">
+                        🔄 <span>21</span>
+                    </button>
+                    <button class="action-btn">
+                        💬 <span>15</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const composeText = document.getElementById('composeText');
+        const charCount = document.getElementById('charCount');
+        const castBtn = document.getElementById('castBtn');
+        const feed = document.getElementById('feed');
+        const castsCountEl = document.getElementById('castsCount');
+
+        let userCasts = 12;
+
+        // Update character count
+        composeText.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = `${length}/280`;
+            
+            if (length > 280) {
+                charCount.style.color = '#ef4444';
+                castBtn.disabled = true;
+            } else {
+                charCount.style.color = length > 250 ? '#f59e0b' : '#666';
+                castBtn.disabled = length === 0;
+            }
+        });
+
+        // Publish new cast
+        function publishCast() {
+            const content = composeText.value.trim();
+            if (!content) return;
+
+            const newCast = document.createElement('div');
+            newCast.className = 'cast';
+            newCast.innerHTML = `
+                <div class="cast-header">
+                    <div class="avatar">Y</div>
+                    <div class="cast-info">
+                        <p class="username">you.eth</p>
+                        <p class="timestamp">now</p>
+                    </div>
+                </div>
+                <div class="cast-content">${content}</div>
+                <div class="cast-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        ❤️ <span>0</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleRecast(this)">
+                        🔄 <span>0</span>
+                    </button>
+                    <button class="action-btn">
+                        💬 <span>0</span>
+                    </button>
+                </div>
+            `;
+
+            feed.insertBefore(newCast, feed.firstChild);
+            
+            // Clear compose box
+            composeText.value = '';
+            charCount.textContent = '0/280';
+            castBtn.disabled = true;
+
+            // Update stats
+            userCasts++;
+            castsCountEl.textContent = userCasts;
+
+            // Add animation
+            newCast.style.transform = 'translateY(-20px)';
+            newCast.style.opacity = '0';
+            setTimeout(() => {
+                newCast.style.transition = 'all 0.3s ease';
+                newCast.style.transform = 'translateY(0)';
+                newCast.style.opacity = '1';
+            }, 10);
+        }
+
+        // Toggle like
+        function toggleLike(btn) {
+            const span = btn.querySelector('span');
+            let count = parseInt(span.textContent);
+            
+            if (btn.classList.contains('liked')) {
+                btn.classList.remove('liked');
+                span.textContent = count - 1;
+            } else {
+                btn.classList.add('liked');
+                span.textContent = count + 1;
+            }
+        }
+
+        // Toggle recast
+        function toggleRecast(btn) {
+            const span = btn.querySelector('span');
+            let count = parseInt(span.textContent);
+            
+            if (btn.classList.contains('recasted')) {
+                btn.classList.remove('recasted');
+                span.textContent = count - 1;
+            } else {
+                btn.classList.add('recasted');
+                span.textContent = count + 1;
+            }
+        }
+
+        // Initialize
+        castBtn.disabled = true;
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9891b83283c77e60',t:'MTc1OTU0OTg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;" src="./saved_resource.html"></iframe>
+
+</body></html>
